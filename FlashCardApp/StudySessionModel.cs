@@ -1,10 +1,11 @@
 ﻿namespace FlashCardApp;
 
-public class StudyModel
+public class StudySessionModel
 {
     public DateOnly StudyDate { get; private set; }
+    public int Score { get; private set; }
 
-    public StudyModel()
+    public StudySessionModel()
     {
         
     }
