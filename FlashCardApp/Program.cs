@@ -44,5 +44,30 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
             Console.WriteLine("Type 4 to view Study session data.");
             Console.WriteLine("---------------------------------------------");
         }
+
+        private static void ShowStackInput()
+        {
+            Console.Write("Choose a stack of FlashCards to interact with: ");
+            Console.WriteLine("\n---------------------------------------------");
+            Console.WriteLine("Input a current stack name");
+            Console.WriteLine("Input 0 to exit input");
+            Console.WriteLine("---------------------------------------------");
+
+        }
+        
+        private static void StackMenu()
+        {
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine($"Current working stack: ");
+            Console.WriteLine("Type 0 to Close Application.");
+            Console.WriteLine("Type X to change current stack.");
+            Console.WriteLine("Type V to view all flashcards in stack   .");
+            Console.WriteLine("Type A to view X amount of cards in stack.");
+            Console.WriteLine("Type C to create a flashcard in current stack.");
+            Console.WriteLine("Type E to edit a flashcard.");
+            Console.WriteLine("Type D to delete a flashcard.");
+            Console.WriteLine("---------------------------------------------");
+        }
+
     }
 }
