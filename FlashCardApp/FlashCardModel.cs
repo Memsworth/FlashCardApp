@@ -3,8 +3,8 @@
 public class FlashCardModel
 {
     public int Id { get; private set; }
-    public string FrontWord { get; }
-    public string BackWord { get; }
+    public string FrontWord { get; private set; }
+    public string BackWord { get; private set; }
 
     public FlashCardModel(string frontWord, string backWord)
     {
@@ -17,3 +17,4 @@ public class FlashCardModel
         Id = id;
     }
 }
+
