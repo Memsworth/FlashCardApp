@@ -5,10 +5,13 @@
         public string FrontWord { get; private set; }
         public string BackWord { get; private set; }
 
-        public FlashCardDTO(string frontWord, string backWord)
+        public static FlashCardDTO FromModel(FlashCardModel flashCard)
         {
-            FrontWord = frontWord;
-            BackWord = backWord;
+            return new FlashCardDTO
+            {
+                FrontWord = flashCard.FrontWord,
+                BackWord = flashCard.BackWord
+            };
         }
     }
 }

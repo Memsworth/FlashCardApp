@@ -1,5 +1,4 @@
-﻿
-namespace FlashCardApp
+﻿namespace FlashCardApp
 {
     internal class LanguageStackDTO
     {
