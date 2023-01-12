@@ -1,11 +1,29 @@
-﻿namespace FlashCardApp;
+﻿using System.Data;
+using Dapper;
+
+namespace FlashCardApp;
 
 public class LanguageStackController
 {
+    private readonly IDbConnection _dbConnection;
     public FlashCardController FlashCardController { get; }
-    public LanguageStackController()
+    public LanguageStackController(IDbConnection dbConnection)
     {
+        _dbConnection = dbConnection;
         FlashCardController = new FlashCardController(new FlashCardModel("1" ,"1"));
+    }
+
+    public void AddLanguageStack()
+    {
+        string languageName;
+        do
+        {
+            Console.Write("Enter language stack name: ");
+            languageName = Console.ReadLine()!;
+        } while (string.IsNullOrEmpty(languageName));
+
+        var languageStack = new LanguageStackModel(languageName);
+        _dbConnection.Execute("INSERT INTO LanguageStackTb (LanguageName) VALUES (@LanguageName)", languageStack);
     }
     public void CreateFlashCard()
     {
@@ -19,6 +37,11 @@ public class LanguageStackController
     }
     public void DeleteFlashCard(int id)
     {
-        //TODO: Where id is equal quenry, delete
+        //TODO: Where id is equal query, delete
+    }
+
+    public void ViewAllFlashCards()
+    {
+        
     }
 }

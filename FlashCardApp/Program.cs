@@ -6,10 +6,13 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
     {
         static void Main(string[] args)
         {
-            var endApp = false;
+            var db = new Database();
+            var languageController = new LanguageStackController(db.DbConnection());
+            var endApp = true;
 
             while (endApp != false)
             {
+                ShowMainMenu();
                 int.TryParse(Console.ReadLine(), out int choice);
 
                 switch (choice)
@@ -18,6 +21,7 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
                         endApp = true;
                         break;
                     case 1:
+                        languageController.AddLanguageStack();
                         break;
                     case 2:
                         break;
