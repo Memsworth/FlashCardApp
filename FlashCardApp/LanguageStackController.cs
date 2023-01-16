@@ -15,15 +15,25 @@ public class LanguageStackController
 
     public void AddLanguageStack()
     {
-        string languageName;
-        do
-        {
-            Console.Write("Enter language stack name: ");
-            languageName = Console.ReadLine()!;
-        } while (string.IsNullOrEmpty(languageName));
+        var languageName = Helper.LanguageNameInput();
 
         var languageStack = new LanguageStackModel(languageName);
         _dbConnection.Execute("INSERT INTO LanguageStackTb (LanguageName) VALUES (@LanguageName)", languageStack);
+    }
+
+    public void DeleteLanguageStack()
+    {
+        var languageName = Helper.LanguageNameInput();
+        try
+        {
+            _dbConnection.Execute("Delete from LanguageStackTb WHERE LanguageName = @languageName",
+                new { languageName = languageName });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     public void CreateFlashCard()
     {
