@@ -16,9 +16,15 @@ public class LanguageStackController
     public void AddLanguageStack()
     {
         var languageName = Helper.LanguageNameInput();
-
         var languageStack = new LanguageStackModel(languageName);
-        _dbConnection.Execute("INSERT INTO LanguageStackTb (LanguageName) VALUES (@LanguageName)", languageStack);
+        try
+        {
+            _dbConnection.Execute("INSERT INTO LanguageStackTb (LanguageName) VALUES (@LanguageName)", languageStack);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 
     public void DeleteLanguageStack()
@@ -31,10 +37,29 @@ public class LanguageStackController
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            Console.WriteLine(e.Message);
         }
     }
+
+    public void EditLanguageStack()
+    {
+        Console.Write("The language stack you want to replace:");
+        var oldLanguageName = Helper.LanguageNameInput();
+        Console.Write("The new language stack:");
+        var newLanguageName = Helper.LanguageNameInput();
+        try
+        {
+            _dbConnection.Execute(
+                "UPDATE LanguageStackTb SET LanguageName = @newLanguage WHERE LanguageName = @oldLanguage",
+                new { newLanguage = newLanguageName, oldLanguage = oldLanguageName });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+    
+    
     public void CreateFlashCard()
     {
         var item = FlashCardController.CreateCard();

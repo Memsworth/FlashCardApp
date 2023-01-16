@@ -18,12 +18,13 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
                 switch (choice)
                 {
                     case 0:
-                        endApp = true;
+                        endApp = false;
                         break;
                     case 1:
                         languageController.AddLanguageStack();
                         break;
                     case 2:
+                        languageController.DeleteLanguageStack();
                         break;
                     case 3:
                         break;
