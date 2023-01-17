@@ -1,19 +1,21 @@
 ﻿namespace FlashCardApp;
 public class FlashCardController
 {
-    public FlashCardModel FlashCard { get; private set; }
-    public FlashCardController(FlashCardModel flashCard)
+    public FlashCardController()
     {
-        FlashCard = flashCard;
+        
     }
 
-    public FlashCardModel CreateCard()
+    public FlashCard CreateCard()
     {
-        return new FlashCardModel("1", "1");
+        var frontWord = Helper.GetString("Enter a front word for the flashcard");
+        var backWord = Helper.GetString($"Enter a back word for {frontWord}");
+        return new FlashCard(frontWord, backWord);
     }
 
-    public FlashCardModel EditFlashCard(FlashCardModel model)
+    public void EditFlashCard(int stackId)
     {
-        return model;
     }
+    
+    
 }

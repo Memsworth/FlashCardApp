@@ -10,7 +10,7 @@ public class LanguageStackController
     public LanguageStackController(IDbConnection dbConnection)
     {
         _dbConnection = dbConnection;
-        FlashCardController = new FlashCardController(new FlashCardModel("1" ,"1"));
+        FlashCardController = new FlashCardController();
     }
 
     public void AddLanguageStack()
@@ -60,19 +60,46 @@ public class LanguageStackController
     }
     
     
-    public void CreateFlashCard()
+    public void CreateFlashCard(int stackId)
     {
         var item = FlashCardController.CreateCard();
-        //TODO: insert flashcard into stack 
+        try
+        {
+            _dbConnection.Execute(
+                "INSERT INTO FlashCardTb (StackId , FrontWord, BackWord) VALUES (@StackId, @FrontWord, @BackWord)",
+                new {StackId = stackId, FrontWord = item.FrontWord, BackWord = item.BackWord});
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        
     }
-    public void EditFlashCard(FlashCardModel model)
+
+    public void EditFlashCard(int flashCardId)
     {
-        var item = FlashCardController.EditFlashCard(model);
-        //TODO: change model place with item and insert back
+        var item = Helper.GetString("enter the edited word");
+
+        try
+        {
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
-    public void DeleteFlashCard(int id)
+    public void DeleteFlashCard(int flashCardId)
     {
-        //TODO: Where id is equal query, delete
+        try
+        {
+            _dbConnection.Execute("Delete from FlashCardTb WHERE FlashCardId = @Id",
+                new { Id = flashCardId });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 
     public void ViewAllFlashCards()

@@ -13,4 +13,16 @@ public static class Helper
 
         return languageName;
     }
+
+    public static string GetString(string message)
+    {
+        string input;
+        do
+        {
+            Console.Write($"{message}: ");
+            input = Console.ReadLine()!;
+        } while (string.IsNullOrEmpty(input));
+
+        return input;
+    }
 }

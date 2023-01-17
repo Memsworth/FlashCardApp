@@ -21,10 +21,10 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
                         endApp = false;
                         break;
                     case 1:
-                        languageController.AddLanguageStack();
+                        StackMenu();
                         break;
                     case 2:
-                        languageController.DeleteLanguageStack();
+                        languageController.DeleteFlashCard(1);
                         break;
                     case 3:
                         break;

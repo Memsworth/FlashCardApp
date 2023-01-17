@@ -3,12 +3,12 @@
     internal class LanguageStackDTO
     {
         public string LanguageName { get; private set; }
-        public List<FlashCardModel> FlashCardStack { get; private set; }
+        public List<FlashCard> FlashCardStack { get; private set; }
 
         public LanguageStackDTO(string languageName)
         {
             LanguageName = languageName;
-            FlashCardStack = new List<FlashCardModel>();
+            FlashCardStack = new List<FlashCard>();
         }
     }
 }
