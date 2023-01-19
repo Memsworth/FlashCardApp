@@ -10,7 +10,7 @@ public class Database
     {
         var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
-        string connectionString = configuration.GetConnectionString("SqlServerConnection")!;
+        string connectionString = configuration.GetConnectionString("DefaultConnection")!;
         return connectionString!;
     }
 

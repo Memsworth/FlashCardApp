@@ -7,7 +7,8 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
         static void Main(string[] args)
         {
             var db = new Database();
-            var languageController = new LanguageStackController(db.DbConnection());
+            var languageController = new LanguageController(db.DbConnection());
+            var stackController = new StackController(db.DbConnection());
             var endApp = true;
 
             while (endApp != false)
@@ -21,10 +22,9 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
                         endApp = false;
                         break;
                     case 1:
-                        StackMenu();
+                        stackController.StackManager();
                         break;
                     case 2:
-                        languageController.DeleteFlashCard(1);
                         break;
                     case 3:
                         break;
@@ -60,19 +60,7 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
 
         }
         
-        private static void StackMenu()
-        {
-            Console.WriteLine("---------------------------------------------");
-            Console.WriteLine($"Current working stack: ");
-            Console.WriteLine("Type 0 to Close Application.");
-            Console.WriteLine("Type X to change current stack.");
-            Console.WriteLine("Type V to view all flashcards in stack   .");
-            Console.WriteLine("Type A to view X amount of cards in stack.");
-            Console.WriteLine("Type C to create a flashcard in current stack.");
-            Console.WriteLine("Type E to edit a flashcard.");
-            Console.WriteLine("Type D to delete a flashcard.");
-            Console.WriteLine("---------------------------------------------");
-        }
+        
 
     }
 }
