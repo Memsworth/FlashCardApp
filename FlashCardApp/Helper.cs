@@ -37,4 +37,17 @@ public static class Helper
         Console.WriteLine("Type D to delete a flashcard.");
         Console.WriteLine("---------------------------------------------");
     }
+    
+    
+    public static void LanguageMenu()
+    {
+        Console.WriteLine("---------------------------------------------");
+        Console.WriteLine("\nLanguage control menu");
+        Console.WriteLine("What would you like to do?\n");
+        Console.WriteLine("Type 0 to go back.");
+        Console.WriteLine("Type 1 to add stack.");
+        Console.WriteLine("Type 2 to edit stack");
+        Console.WriteLine("Type 3 to delete stack.");
+        Console.WriteLine("---------------------------------------------");
+    }
 }

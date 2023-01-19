@@ -22,9 +22,10 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
                         endApp = false;
                         break;
                     case 1:
-                        stackController.StackManager();
+                        languageController.LanguageManager();
                         break;
                     case 2:
+                        stackController.StackManager();
                         break;
                     case 3:
                         break;

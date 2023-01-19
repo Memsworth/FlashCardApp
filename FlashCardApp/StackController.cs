@@ -16,24 +16,19 @@ public class StackController
 
     public void StackManager()
     {
-        var stackEdit = false;
+        var stackEdit = true;
         while (stackEdit != false)
         {
-            try
-            {
-                
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            ViewAllLanguageStacks();
+            SetStackId();
             Helper.StackMenu();
             switch (Console.ReadLine())
             {
                 case "0":
-                    stackEdit = true;
+                    stackEdit = false;
                     break;
                 case "X":
+                    SetStackId();
                     break;
                 case "V":
                     ViewStackFlashCards();
@@ -47,12 +42,30 @@ public class StackController
                     EditFlashCard(1);
                     break;
                 case "D":
-                    DeleteFlashCard(1);
+                    DeleteFlashCard();
                     break;
                 default:
                     Console.WriteLine("Wrong input. Try again.");
                     break;
             }
+        }
+    }
+
+    private void SetStackId()
+    {
+        try
+        {
+            var stackNameInput = Helper.GetString("Enter the stack you want to work with");
+            var item = _dbConnection.QueryFirst<LanguageStackModel>(
+                "SELECT * FROM LanguageStackTb WHERE LanguageName = @languageName",
+                new { languageName = stackNameInput });
+
+            CurrentStackId = item.StackId;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            throw;
         }
     }
 
@@ -86,8 +99,10 @@ public class StackController
     }
     
     
-    private void DeleteFlashCard(int flashCardId)
+    private void DeleteFlashCard()
     {
+        Console.Write("Enter flashcardID to delete");
+        int.TryParse(Console.ReadLine(), out int flashCardId);
         try
         {
             _dbConnection.Execute("Delete from FlashCardTb WHERE FlashCardId = @Id AND StackId = @stackId",
@@ -105,7 +120,7 @@ public class StackController
         ConsoleTableBuilder.From(items).ExportAndWriteLine();
     }
 
-    public void ViewAllLanguageStacks()
+    private void ViewAllLanguageStacks()
     {
         var items = _dbConnection.Query<LanguageStackDTO>("SELECT * FROM LanguageStackTb").ToList();
         ConsoleTableBuilder.From(items).ExportAndWriteLine();

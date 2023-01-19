@@ -19,8 +19,8 @@ public class LanguageController
 
         while (isDone != true)
         {
+            Helper.LanguageMenu();
             int.TryParse(Console.ReadLine(), out int choice);
-
             switch (choice)
             {
                 case 0:
@@ -61,12 +61,12 @@ public class LanguageController
         var languageNameInput = Helper.GetString("Deleting a language stack");
         try
         {
-            var languageStackId =
-                _dbConnection.Execute("SELECT StackId FROM LanguageStackTb WHERE LanguageName = @languageName",
-                    new { languageName = languageNameInput });
-            
-            _dbConnection.Execute("Delete from LanguageStackTb WHERE StackId = @stackId",
-                new { stackId = languageStackId });
+            var languageStack = _dbConnection.QueryFirst<LanguageStackModel>(
+                "SELECT * FROM LanguageStackTb WHERE LanguageName = @languageName",
+                new { languageName = languageNameInput });
+
+                _dbConnection.Execute("Delete from LanguageStackTb WHERE StackId = @stackId",
+                new { stackId = languageStack.StackId });
         }
         catch (Exception e)
         {
@@ -80,9 +80,13 @@ public class LanguageController
         var newLanguageName = Helper.GetString("The new language stack");
         try
         {
+            var languageStack = _dbConnection.QueryFirst<LanguageStackModel>(
+                "SELECT * FROM LanguageStackTb WHERE LanguageName = @languageName",
+                new { languageName = oldLanguageName });
+            
             _dbConnection.Execute(
-                "UPDATE LanguageStackTb SET LanguageName = @newLanguage WHERE LanguageName = @oldLanguage",
-                new { newLanguage = newLanguageName, oldLanguage = oldLanguageName });
+                "UPDATE LanguageStackTb SET LanguageName = @newLanguage WHERE StackId = @stackId",
+                new { newLanguage = newLanguageName, stackId = languageStack.StackId });
         }
         catch (Exception e)
         {
