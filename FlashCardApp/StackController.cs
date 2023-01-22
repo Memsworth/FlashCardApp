@@ -98,7 +98,8 @@ public class StackController
 
     private void EditFlashCard()
     {
-        ViewAllLanguageStacks();
+        var items = _dbConnection.Query<FlashCardDeleteDTO>("SELECT * FROM FlashCardTb WHERE StackId = @Id", new {Id = CurrentStackId}).ToList();
+        ConsoleTableBuilder.From(items).ExportAndWriteLine();
         Console.Write("Select flashCardId to change: ");
         int.TryParse(Console.ReadLine(), out int flashCardId);
         var item = Helper.GetString("enter an updated word");
