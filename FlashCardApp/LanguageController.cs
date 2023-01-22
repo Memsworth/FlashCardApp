@@ -15,17 +15,14 @@ public class LanguageController
 
     public void LanguageManager()
     {
-        var isDone = false;
-
-        while (isDone != true)
+        while (true)
         {
             Helper.LanguageMenu();
             int.TryParse(Console.ReadLine(), out int choice);
             switch (choice)
             {
                 case 0:
-                    isDone = true;
-                    break;
+                    return;
                 case 1:
                     AddLanguageStack();
                     break;

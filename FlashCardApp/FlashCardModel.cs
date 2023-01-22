@@ -2,8 +2,8 @@
 
 public class FlashCard
 {
-    public int Id { get; private set; }
-    public int LanguageStackId { get; private set; }
+    public int FlashCardId { get; private set; }
+    public int StackId { get; private set; }
     public string FrontWord { get; private set; }
     public string BackWord { get; private set; }
 
@@ -13,14 +13,15 @@ public class FlashCard
         BackWord = backWord;
     }
 
-    public FlashCard(int id, int languageStackId, string frontWord, string backWord) : this(frontWord, backWord)
+    public FlashCard(int flashCardId, int stackId, string frontWord, string backWord) : this(frontWord, backWord)
     {
-        Id = id;
-        LanguageStackId = languageStackId;
+        FlashCardId = flashCardId;
+        StackId = stackId;
     }
-    public FlashCard(int id, string frontWord, string backWord) : this(frontWord, backWord)
+
+    public FlashCard()
     {
-        Id = id;
+        
     }
 }
 

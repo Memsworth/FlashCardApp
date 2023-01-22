@@ -24,10 +24,10 @@ public static class Helper
     }
     
     
-    public static void StackMenu()
+    public static void StackMenu(string languageName)
     {
         Console.WriteLine("---------------------------------------------");
-        Console.WriteLine($"Current working stack: ");
+        Console.WriteLine($"Current working stack: {languageName}");
         Console.WriteLine("Type 0 to Close Application.");
         Console.WriteLine("Type X to change current stack.");
         Console.WriteLine("Type V to view all flashcards in stack   .");
@@ -46,8 +46,8 @@ public static class Helper
         Console.WriteLine("What would you like to do?\n");
         Console.WriteLine("Type 0 to go back.");
         Console.WriteLine("Type 1 to add stack.");
-        Console.WriteLine("Type 2 to edit stack");
-        Console.WriteLine("Type 3 to delete stack.");
+        Console.WriteLine("Type 2 to delete stack");
+        Console.WriteLine("Type 3 to edit stack.");
         Console.WriteLine("---------------------------------------------");
     }
 }

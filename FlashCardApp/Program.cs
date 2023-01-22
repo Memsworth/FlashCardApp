@@ -9,9 +9,8 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
             var db = new Database();
             var languageController = new LanguageController(db.DbConnection());
             var stackController = new StackController(db.DbConnection());
-            var endApp = true;
 
-            while (endApp != false)
+            while (true)
             {
                 ShowMainMenu();
                 int.TryParse(Console.ReadLine(), out int choice);
@@ -19,8 +18,7 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
                 switch (choice)
                 {
                     case 0:
-                        endApp = false;
-                        break;
+                        return;
                     case 1:
                         languageController.LanguageManager();
                         break;
@@ -32,6 +30,7 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
                     case 4:
                         break;
                     default:
+                        Console.WriteLine("wrong input");
                         break;
                 }
             }
