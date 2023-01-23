@@ -4,9 +4,9 @@
     {
         public string LanguageName { get; private set; }
 
-        public LanguageStackDTO(string languageName)
+        public LanguageStackDTO(LanguageStackModel languageStack)
         {
-            LanguageName = languageName;
+            LanguageName = languageStack.LanguageName;
         }
 
         public LanguageStackDTO()

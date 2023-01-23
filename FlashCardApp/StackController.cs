@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using ConsoleTableExt;
 using Dapper;
 
 namespace FlashCardApp;
@@ -14,56 +13,13 @@ public class StackController
         _dbConnection = dbConnection;
     }
 
-    public void StackManager()
-    { 
-        ViewAllLanguageStacks();
-        var languageName = GetStackName();
-        SetStackId(languageName);
-        while (true)
-        {
-            
-            Helper.StackMenu(languageName);
-            switch (Console.ReadLine())
-            {
-                case "0":
-                    return;
-                case "X":
-                    languageName = GetStackName();
-                    SetStackId(languageName);
-                    break;
-                case "V":
-                    ViewStackFlashCards();
-                    break;
-                case "A":
-                    Console.Write("Enter amount: ");
-                    int.TryParse(Console.ReadLine(), out int amount);
-                    DisplayXCards(amount);
-                    break;
-                case "C":
-                    CreateFlashCard();
-                    break;
-                case "E":
-                    EditFlashCard();
-                    break;
-                case "D":
-                    DeleteFlashCard();
-                    break;
-                default:
-                    Console.WriteLine("Wrong input. Try again.");
-                    break;
-            }
-        }
-    }
+    internal List<T> DisplayXCards<T>(int amount) where T : FlashCard => _dbConnection.Query<T>(
+        $"SELECT TOP {amount} * FROM FlashCardTb WHERE StackId = @Id",
+        new { Id = CurrentStackId }).ToList();
 
-    private void DisplayXCards(int amount)
-    {
-        var items = _dbConnection.Query<FlashCardDTO>("SELECT TOP @Amount FROM FlashCardTb WHERE StackId = @Id", new {Amount = amount ,Id = CurrentStackId}).ToList();
-        ConsoleTableBuilder.From(items).ExportAndWriteLine();
-    }
+    internal string GetStackName() => Helper.GetString("Enter the stack you want to work with");
 
-    private string GetStackName() => Helper.GetString("Enter the stack you want to work with");
-
-    private void SetStackId(string languageNameInput)
+    internal void SetStackId(string languageNameInput)
     {
         try
         {
@@ -80,7 +36,7 @@ public class StackController
         }
     }
 
-    private void CreateFlashCard()
+    internal void CreateFlashCard()
     {
         var item = Helper.CreateCard();
         try
@@ -96,15 +52,16 @@ public class StackController
         
     }
 
-    private void EditFlashCard()
+    internal void EditFlashCard()
     {
-        var items = _dbConnection.Query<FlashCardDeleteDTO>("SELECT * FROM FlashCardTb WHERE StackId = @Id", new {Id = CurrentStackId}).ToList();
-        ConsoleTableBuilder.From(items).ExportAndWriteLine();
         Console.Write("Select flashCardId to change: ");
         int.TryParse(Console.ReadLine(), out int flashCardId);
+        
         var item = Helper.GetString("enter an updated word");
-        Console.Write("Enter 1 to change Front Word. 2 to change Back Word");
+        
+        Console.Write("Enter 1 to change Front Word. 2 to change Back Word: ");
         int.TryParse(Console.ReadLine(), out int choice);
+
         switch (choice)
         {
             case 1:
@@ -138,12 +95,11 @@ public class StackController
     }
     
     
-    private void DeleteFlashCard()
+    internal void DeleteFlashCard()
     {
-        var items = _dbConnection.Query<FlashCardDeleteDTO>("SELECT * FROM FlashCardTb WHERE StackId = @Id", new {Id = CurrentStackId}).ToList();
-        ConsoleTableBuilder.From(items).ExportAndWriteLine();
         Console.Write("Enter flashcardID to delete: ");
         int.TryParse(Console.ReadLine(), out int flashCardId);
+        
         try
         {
             _dbConnection.Execute("Delete from FlashCardTb WHERE FlashCardId = @Id AND StackId = @stackId",
@@ -155,34 +111,9 @@ public class StackController
         }
     }
 
-    private void ViewStackFlashCards()
-    {
-        var items = _dbConnection.Query<FlashCardDTO>("SELECT * FROM FlashCardTb WHERE StackId = @Id", new {Id = CurrentStackId}).ToList();
-        ConsoleTableBuilder.From(items).ExportAndWriteLine();
-    }
+    internal List<T> GetStackFlashCard<T>() where T : FlashCard => _dbConnection
+        .Query<T>("SELECT * FROM FlashCardTb WHERE StackId = @Id", new { Id = CurrentStackId }).ToList();
 
-    private void ViewAllLanguageStacks()
-    {
-        var items = _dbConnection.Query<LanguageStackDTO>("SELECT * FROM LanguageStackTb").ToList();
-        ConsoleTableBuilder.From(items).ExportAndWriteLine();
-    }
-}
-
-public class FlashCardDeleteDTO
-{
-    public int FlashCardId { get; private set; }
-    public string FrontWord { get; private set; }
-    public string BackWord { get; private set; }
-
-    public FlashCardDeleteDTO(int flashCardId,  FlashCard flashCard)
-    {
-        FlashCardId = flashCardId;
-        FrontWord = flashCard.FrontWord;
-        BackWord = flashCard.BackWord;
-    }
-
-    public FlashCardDeleteDTO()
-    {
-            
-    }
+    internal List<T> GetLanguageStack<T>() where T : LanguageStackModel =>
+        _dbConnection.Query<T>("SELECT * FROM LanguageStackTb").ToList();
 }

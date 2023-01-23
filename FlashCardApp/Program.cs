@@ -8,7 +8,7 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
         {
             var db = new Database();
             var languageController = new LanguageController(db.DbConnection());
-            var stackController = new StackController(db.DbConnection());
+            var stackController = new StackManager(db.DbConnection());
 
             while (true)
             {
@@ -23,7 +23,7 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
                         languageController.LanguageManager();
                         break;
                     case 2:
-                        stackController.StackManager();
+                        stackController.Stack();
                         break;
                     case 3:
                         break;
