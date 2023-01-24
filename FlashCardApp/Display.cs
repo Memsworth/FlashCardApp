@@ -1,7 +1,5 @@
 ﻿using System.Data;
-using System.Xml;
 using ConsoleTableExt;
-using Dapper;
 
 namespace FlashCardApp;
 

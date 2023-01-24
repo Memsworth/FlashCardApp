@@ -14,19 +14,20 @@ public class StackManager
     {
         var stackController = new StackController(DbConnection);
         var displayController = new Display(DbConnection);
-        
+
+        displayController.DisplayLanguages(stackController.GetLanguageStack<LanguageStackModel>());
         var currentLanguageStackName = stackController.GetStackName();
         stackController.SetStackId(currentLanguageStackName);
 
         while (true)
         {
-            
             Helper.StackMenu(currentLanguageStackName);
             switch (Console.ReadLine())
             {
                 case "0":
                     return;
                 case "X":
+                    displayController.DisplayLanguages(stackController.GetLanguageStack<LanguageStackModel>());
                     currentLanguageStackName = stackController.GetStackName();
                     stackController.SetStackId(currentLanguageStackName);
                     break;

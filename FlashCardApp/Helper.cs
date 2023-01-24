@@ -28,7 +28,7 @@ public static class Helper
     {
         Console.WriteLine("---------------------------------------------");
         Console.WriteLine($"Current working stack: {languageName}");
-        Console.WriteLine("Type 0 to Close Application.");
+        Console.WriteLine("Type 0 to go back.");
         Console.WriteLine("Type X to change current stack.");
         Console.WriteLine("Type V to view all flashcards in stack   .");
         Console.WriteLine("Type A to view X amount of cards in stack.");
