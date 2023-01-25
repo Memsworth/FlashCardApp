@@ -1,5 +1,7 @@
-﻿namespace FlashCardApp
-{
+﻿    using FlashCardApp.Models.DBO;
+
+    namespace FlashCardApp.Models.DTO; 
+
     internal class FlashCardDTO
     {
         public string FrontWord { get; private set; }
@@ -17,4 +19,3 @@
         }
         
     }
-}

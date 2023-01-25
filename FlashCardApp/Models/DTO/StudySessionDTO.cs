@@ -1,4 +1,6 @@
-namespace FlashCardApp;
+using FlashCardApp.Models.DBO;
+
+namespace FlashCardApp.Models.DTO;
 
 public class StudySessionDTO
 {

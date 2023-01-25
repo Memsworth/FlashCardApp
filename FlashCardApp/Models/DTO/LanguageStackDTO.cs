@@ -1,5 +1,7 @@
-﻿namespace FlashCardApp
-{
+﻿    using FlashCardApp.Models.DBO;
+
+    namespace FlashCardApp.Models.DTO; 
+
     internal class LanguageStackDTO
     {
         public string LanguageName { get; private set; }
@@ -14,4 +16,3 @@
             
         }
     }
-}

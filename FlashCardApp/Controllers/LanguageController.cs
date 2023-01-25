@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using Dapper;
+using FlashCardApp.Models.DBO;
 
-namespace FlashCardApp;
+namespace FlashCardApp.Controllers;
 
 public class LanguageController
 {
@@ -62,7 +63,7 @@ public class LanguageController
                 "SELECT * FROM LanguageStackTb WHERE LanguageName = @languageName",
                 new { languageName = languageNameInput });
 
-                _dbConnection.Execute("Delete from LanguageStackTb WHERE StackId = @stackId",
+            _dbConnection.Execute("Delete from LanguageStackTb WHERE StackId = @stackId",
                 new { stackId = languageStack.StackId });
         }
         catch (Exception e)

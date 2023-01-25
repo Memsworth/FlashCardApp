@@ -1,7 +1,9 @@
 ﻿using System.Data;
 using ConsoleTableExt;
+using FlashCardApp.Models.DBO;
+using FlashCardApp.Models.DTO;
 
-namespace FlashCardApp;
+namespace FlashCardApp.Services;
 
 public class Display
 {

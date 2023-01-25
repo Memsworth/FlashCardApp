@@ -1,6 +1,9 @@
 ﻿using System.Data;
+using FlashCardApp.Controllers;
+using FlashCardApp.Models.DBO;
+using FlashCardApp.Services;
 
-namespace FlashCardApp;
+namespace FlashCardApp.Manager;
 
 public class StackManager
 {

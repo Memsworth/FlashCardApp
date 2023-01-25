@@ -1,6 +1,10 @@
 ﻿using System.Data;
 using ConsoleTableExt;
 using Dapper;
+using FlashCardApp.Controllers;
+using FlashCardApp.Models.DBO;
+using FlashCardApp.Models.DTO;
+using FlashCardApp.Services;
 
 namespace FlashCardApp;
 

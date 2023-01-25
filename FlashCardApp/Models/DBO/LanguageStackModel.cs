@@ -1,4 +1,5 @@
-﻿namespace FlashCardApp;
+﻿
+namespace FlashCardApp.Models.DBO;
 
 public class LanguageStackModel
 {

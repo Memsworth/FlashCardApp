@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using Dapper;
+using FlashCardApp.Models.DBO;
 
-namespace FlashCardApp;
+namespace FlashCardApp.Controllers;
 
 public class StackController
 {

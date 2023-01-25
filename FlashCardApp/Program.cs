@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FlashCardApp.Controllers;
+using FlashCardApp.Manager;
+using FlashCardApp.Services;
 
 namespace FlashCardApp // Note: actual namespace depends on the project name.
 {

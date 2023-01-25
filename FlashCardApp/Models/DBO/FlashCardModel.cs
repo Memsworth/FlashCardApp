@@ -1,4 +1,5 @@
-﻿namespace FlashCardApp;
+﻿
+namespace FlashCardApp.Models.DBO;
 
 public class FlashCard
 {
@@ -24,4 +25,3 @@ public class FlashCard
         
     }
 }
-

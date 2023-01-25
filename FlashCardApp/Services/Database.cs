@@ -2,7 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-namespace FlashCardApp;
+namespace FlashCardApp.Services;
 
 public class Database
 {
