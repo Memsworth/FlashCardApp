@@ -6,7 +6,7 @@ namespace FlashCardApp;
 public class StackController
 {
     private readonly IDbConnection _dbConnection;
-    private int CurrentStackId { get; set; }
+    public int CurrentStackId { get; private set; }
     
     public StackController(IDbConnection dbConnection)
     {
@@ -17,7 +17,6 @@ public class StackController
         $"SELECT TOP {amount} * FROM FlashCardTb WHERE StackId = @Id",
         new { Id = CurrentStackId }).ToList();
 
-    internal string GetStackName() => Helper.GetString("Enter the stack you want to work with");
 
     internal void SetStackId(string languageNameInput)
     {
@@ -113,7 +112,4 @@ public class StackController
 
     internal List<T> GetStackFlashCard<T>() where T : FlashCard => _dbConnection
         .Query<T>("SELECT * FROM FlashCardTb WHERE StackId = @Id", new { Id = CurrentStackId }).ToList();
-
-    internal List<T> GetLanguageStack<T>() where T : LanguageStackModel =>
-        _dbConnection.Query<T>("SELECT * FROM LanguageStackTb").ToList();
 }

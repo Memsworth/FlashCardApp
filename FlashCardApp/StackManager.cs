@@ -15,8 +15,8 @@ public class StackManager
         var stackController = new StackController(DbConnection);
         var displayController = new Display(DbConnection);
 
-        displayController.DisplayLanguages(stackController.GetLanguageStack<LanguageStackModel>());
-        var currentLanguageStackName = stackController.GetStackName();
+        displayController.DisplayLanguages(Helper.GetLanguageStack<LanguageStackModel>(DbConnection));
+        var currentLanguageStackName = Helper.GetStackName();
         stackController.SetStackId(currentLanguageStackName);
 
         while (true)
@@ -27,8 +27,8 @@ public class StackManager
                 case "0":
                     return;
                 case "X":
-                    displayController.DisplayLanguages(stackController.GetLanguageStack<LanguageStackModel>());
-                    currentLanguageStackName = stackController.GetStackName();
+                    displayController.DisplayLanguages(Helper.GetLanguageStack<LanguageStackModel>(DbConnection));
+                    currentLanguageStackName = Helper.GetStackName();
                     stackController.SetStackId(currentLanguageStackName);
                     break;
                 case "V":

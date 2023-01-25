@@ -1,8 +1,12 @@
+using System.Data;
+using Dapper;
+
 namespace FlashCardApp;
 
 public static class Helper
 {
     
+    public static string GetStackName() => Helper.GetString("Enter the stack you want to work with");
 
     public static string GetString(string message)
     {
@@ -37,6 +41,9 @@ public static class Helper
         Console.WriteLine("Type D to delete a flashcard.");
         Console.WriteLine("---------------------------------------------");
     }
+    
+    public static List<T> GetLanguageStack<T>(IDbConnection connection) where T : LanguageStackModel =>
+        connection.Query<T>("SELECT * FROM LanguageStackTb").ToList();
     
     
     public static void LanguageMenu()
