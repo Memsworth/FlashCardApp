@@ -1,6 +1,7 @@
 
 using System.Data;
 using FlashCardApp.Controllers;
+using FlashCardApp.Services;
 
 namespace FlashCardApp.Manager;
 
@@ -15,7 +16,6 @@ public class LanguageManager
     
     public void ManageLanguage()
     {
-        var controller = new LanguageController();
         
         while (true)
         {
@@ -26,13 +26,15 @@ public class LanguageManager
                 case 0:
                     return;
                 case 1:
-                    controller.AddLanguageStack(_dbConnection);
+                    _dbConnection.AddLanguageStack();
                     break;
                 case 2:
-                    controller.DeleteLanguageStack(_dbConnection);
+                    Display.DisplayLanguages(Helper.GetLanguageStack(_dbConnection));
+                    _dbConnection.DeleteLanguageStack();
                     break;
                 case 3:
-                    controller.EditLanguageStack(_dbConnection);
+                    Display.DisplayLanguages(Helper.GetLanguageStack(_dbConnection));
+                    _dbConnection.EditLanguageStack();
                     break;
                 default:
                     Console.WriteLine("Wrong command");

@@ -45,11 +45,11 @@ public class StackManager
                     stackController.CreateFlashCard(_dbConnection);
                     break;
                 case "E":
-                    Display.DisplayFlashCards(stackController.GetStackFlashCard(_dbConnection));
+                    Display.DisplayFlashCardId(stackController.GetStackFlashCard(_dbConnection));
                     stackController.EditFlashCard(_dbConnection);
                     break;
                 case "D":
-                    Display.DisplayFlashCards(stackController.GetStackFlashCard(_dbConnection));
+                    Display.DisplayFlashCardId(stackController.GetStackFlashCard(_dbConnection));
                     stackController.DeleteFlashCard(_dbConnection);
                     break;
                 default:

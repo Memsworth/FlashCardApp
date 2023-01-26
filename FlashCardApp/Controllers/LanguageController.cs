@@ -4,9 +4,9 @@ using FlashCardApp.Models.DBO;
 
 namespace FlashCardApp.Controllers;
 
-public class LanguageController
+public static class LanguageController
 {
-    public void AddLanguageStack(IDbConnection dbConnection)
+    public static void AddLanguageStack( this IDbConnection dbConnection)
     {
         var languageName = Helper.GetString("Creating a new language stack");
         var languageStack = new LanguageStackModel(languageName);
@@ -20,7 +20,7 @@ public class LanguageController
         }
     }
 
-    public void DeleteLanguageStack(IDbConnection dbConnection)
+    public static void DeleteLanguageStack( this IDbConnection dbConnection)
     {
         var languageNameInput = Helper.GetString("Deleting a language stack");
         try
@@ -38,7 +38,7 @@ public class LanguageController
         }
     }
 
-    public void EditLanguageStack(IDbConnection dbConnection)
+    public static void EditLanguageStack(this IDbConnection dbConnection)
     {
         var oldLanguageName = Helper.GetString("The language stack you want to replace");
         var newLanguageName = Helper.GetString("The new language stack");
