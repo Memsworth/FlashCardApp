@@ -1,5 +1,4 @@
-﻿using FlashCardApp.Controllers;
-using FlashCardApp.Manager;
+﻿using FlashCardApp.Manager;
 using FlashCardApp.Services;
 
 namespace FlashCardApp // Note: actual namespace depends on the project name.
@@ -9,28 +8,29 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
         static void Main(string[] args)
         {
             var db = new Database();
-            var languageController = new LanguageController(db.DbConnection());
-            var stackController = new StackManager(db.DbConnection());
-            var study = new StudySession(db.DbConnection());
+            var languageManager = new LanguageManager(db.DbConnection());
+            var stackManager = new StackManager(db.DbConnection());
+            var sessionManager = new StudySessionManager(db.DbConnection());
             while (true)
             {
                 ShowMainMenu();
-                int.TryParse(Console.ReadLine(), out int choice);
+                int choice = Helper.GetValidInt("Enter a value", 0, 4);
 
                 switch (choice)
                 {
                     case 0:
                         return;
                     case 1:
-                        languageController.LanguageManager();
+                        languageManager.ManageLanguage();
                         break;
                     case 2:
-                        stackController.Stack();
+                        stackManager.ManageStack();
                         break;
                     case 3:
-                        study.StartSession();
+                        sessionManager.StartSession();
                         break;
                     case 4:
+                        sessionManager.DisplaySessions();
                         break;
                     default:
                         Console.WriteLine("wrong input");
@@ -38,7 +38,6 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
                 }
             }
         }
-
 
         private static void ShowMainMenu()
         {
@@ -52,18 +51,5 @@ namespace FlashCardApp // Note: actual namespace depends on the project name.
             Console.WriteLine("Type 4 to view Study session data.");
             Console.WriteLine("---------------------------------------------");
         }
-
-        private static void ShowStackInput()
-        {
-            Console.Write("Choose a stack of FlashCards to interact with: ");
-            Console.WriteLine("\n---------------------------------------------");
-            Console.WriteLine("Input a current stack name");
-            Console.WriteLine("Input 0 to exit input");
-            Console.WriteLine("---------------------------------------------");
-
-        }
-        
-        
-
     }
 }

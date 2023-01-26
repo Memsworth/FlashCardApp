@@ -6,9 +6,6 @@ namespace FlashCardApp;
 
 public static class Helper
 {
-    
-    public static string GetStackName() => Helper.GetString("Enter the stack you want to work with");
-
     public static string GetString(string message)
     {
         string input;
@@ -20,6 +17,23 @@ public static class Helper
 
         return input;
     }
+
+    public static string GetStackName() => Helper.GetString("Enter the stack you want to work with");
+
+    public static int GetValidInt(string message, int min, int max)
+    {
+        int input;
+        do
+        {
+            Console.Write($"{message}: ");
+            int.TryParse(Console.ReadLine(), out input);
+        } while (input <= min && input >= max);
+
+        return input;
+    }
+    
+    public static List<LanguageStackModel> GetLanguageStack(IDbConnection connection)=>
+        connection.Query<LanguageStackModel>("SELECT * FROM LanguageStackTb").ToList();
     
     public static FlashCard CreateCard()
     {
@@ -27,8 +41,6 @@ public static class Helper
         var backWord = Helper.GetString($"Enter a back word for {frontWord}");
         return new FlashCard(frontWord, backWord);
     }
-    
-    
     public static void StackMenu(string languageName)
     {
         Console.WriteLine("---------------------------------------------");
@@ -42,11 +54,6 @@ public static class Helper
         Console.WriteLine("Type D to delete a flashcard.");
         Console.WriteLine("---------------------------------------------");
     }
-    
-    public static List<T> GetLanguageStack<T>(IDbConnection connection) where T : LanguageStackModel =>
-        connection.Query<T>("SELECT * FROM LanguageStackTb").ToList();
-    
-    
     public static void LanguageMenu()
     {
         Console.WriteLine("---------------------------------------------");

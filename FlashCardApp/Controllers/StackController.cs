@@ -6,24 +6,23 @@ namespace FlashCardApp.Controllers;
 
 public class StackController
 {
-    private readonly IDbConnection _dbConnection;
+    
     public int CurrentStackId { get; private set; }
     
-    public StackController(IDbConnection dbConnection)
+    public StackController()
     {
-        _dbConnection = dbConnection;
     }
 
-    internal List<T> DisplayXCards<T>(int amount) where T : FlashCard => _dbConnection.Query<T>(
+    internal List<FlashCard> DisplayXCards(int amount, IDbConnection dbConnection) => dbConnection.Query<FlashCard>(
         $"SELECT TOP {amount} * FROM FlashCardTb WHERE StackId = @Id",
         new { Id = CurrentStackId }).ToList();
 
 
-    internal void SetStackId(string languageNameInput)
+    internal void SetStackId(string languageNameInput, IDbConnection dbConnection)
     {
         try
         {
-            var item = _dbConnection.QueryFirst<LanguageStackModel>(
+            var item = dbConnection.QueryFirst<LanguageStackModel>(
                 "SELECT * FROM LanguageStackTb WHERE LanguageName = @languageName",
                 new { languageName = languageNameInput });
 
@@ -36,12 +35,12 @@ public class StackController
         }
     }
 
-    internal void CreateFlashCard()
+    internal void CreateFlashCard(IDbConnection dbConnection)
     {
         var item = Helper.CreateCard();
         try
         {
-            _dbConnection.Execute(
+            dbConnection.Execute(
                 "INSERT INTO FlashCardTb (StackId , FrontWord, BackWord) VALUES (@StackId, @FrontWord, @BackWord)",
                 new {StackId = CurrentStackId, FrontWord = item.FrontWord, BackWord = item.BackWord});
         }
@@ -52,22 +51,20 @@ public class StackController
         
     }
 
-    internal void EditFlashCard()
+    internal void EditFlashCard(IDbConnection dbConnection)
     {
-        Console.Write("Select flashCardId to change: ");
-        int.TryParse(Console.ReadLine(), out int flashCardId);
+        int flashCardId = Helper.GetValidInt("Select flashCardId to change", 1, int.MaxValue);
         
         var item = Helper.GetString("enter an updated word");
         
-        Console.Write("Enter 1 to change Front Word. 2 to change Back Word: ");
-        int.TryParse(Console.ReadLine(), out int choice);
+        int choice = Helper.GetValidInt("Enter 1 to change Front Word. 2 to change Back Word", 1, 2);
 
         switch (choice)
         {
             case 1:
                 try
                 {
-                    _dbConnection.Execute(
+                    dbConnection.Execute(
                         "UPDATE FlashCardTb SET FrontWord = @frontWord WHERE FlashCardId = @flashcardId",
                         new { frontWord = item, flashcardId = flashCardId });
                 }
@@ -79,7 +76,7 @@ public class StackController
             case 2:
                 try
                 {
-                    _dbConnection.Execute(
+                    dbConnection.Execute(
                         "UPDATE FlashCardTb SET BackWord = @backWord WHERE FlashCardId = @flashcardId",
                         new { backWord = item, flashcardId = flashCardId });
                 }
@@ -95,14 +92,13 @@ public class StackController
     }
     
     
-    internal void DeleteFlashCard()
+    internal void DeleteFlashCard(IDbConnection dbConnection)
     {
-        Console.Write("Enter flashcardID to delete: ");
-        int.TryParse(Console.ReadLine(), out int flashCardId);
-        
+        int flashCardId = Helper.GetValidInt("Select flashCardId to delete", 1, int.MaxValue);
+
         try
         {
-            _dbConnection.Execute("Delete from FlashCardTb WHERE FlashCardId = @Id AND StackId = @stackId",
+            dbConnection.Execute("Delete from FlashCardTb WHERE FlashCardId = @Id AND StackId = @stackId",
                 new { Id = flashCardId, stackId = CurrentStackId });
         }
         catch (Exception e)
@@ -111,6 +107,6 @@ public class StackController
         }
     }
 
-    internal List<T> GetStackFlashCard<T>() where T : FlashCard => _dbConnection
-        .Query<T>("SELECT * FROM FlashCardTb WHERE StackId = @Id", new { Id = CurrentStackId }).ToList();
+    internal List<FlashCard> GetStackFlashCard(IDbConnection dbConnection) => dbConnection
+        .Query<FlashCard>("SELECT * FROM FlashCardTb WHERE StackId = @Id", new { Id = CurrentStackId }).ToList();
 }

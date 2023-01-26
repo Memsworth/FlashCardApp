@@ -7,20 +7,19 @@ namespace FlashCardApp.Manager;
 
 public class StackManager
 {
-    private IDbConnection DbConnection { get; }
+    private readonly IDbConnection _dbConnection;
     public StackManager(IDbConnection connection)
     {
-        DbConnection = connection;
+        _dbConnection = connection;
     }
     
-    public void Stack()
+    public void ManageStack()
     {
-        var stackController = new StackController(DbConnection);
-        var displayController = new Display(DbConnection);
+        var stackController = new StackController();
 
-        displayController.DisplayLanguages(Helper.GetLanguageStack<LanguageStackModel>(DbConnection));
+        Display.DisplayLanguages(Helper.GetLanguageStack(_dbConnection));
         var currentLanguageStackName = Helper.GetStackName();
-        stackController.SetStackId(currentLanguageStackName);
+        stackController.SetStackId(currentLanguageStackName, _dbConnection);
 
         while (true)
         {
@@ -30,28 +29,28 @@ public class StackManager
                 case "0":
                     return;
                 case "X":
-                    displayController.DisplayLanguages(Helper.GetLanguageStack<LanguageStackModel>(DbConnection));
+                    Display.DisplayLanguages(Helper.GetLanguageStack(_dbConnection));
                     currentLanguageStackName = Helper.GetStackName();
-                    stackController.SetStackId(currentLanguageStackName);
+                    stackController.SetStackId(currentLanguageStackName, _dbConnection);
                     break;
                 case "V":
-                    displayController.DisplayFlashCards(stackController.GetStackFlashCard<FlashCard>());
+                    Display.DisplayFlashCards(stackController.GetStackFlashCard(_dbConnection));
                     break;
                 case "A":
                     Console.Write("Enter amount: ");
                     int.TryParse(Console.ReadLine(), out int amount);
-                    displayController.DisplayFlashCards(stackController.DisplayXCards<FlashCard>(amount));
+                    Display.DisplayFlashCards(stackController.DisplayXCards(amount, _dbConnection));
                     break;
                 case "C":
-                    stackController.CreateFlashCard();
+                    stackController.CreateFlashCard(_dbConnection);
                     break;
                 case "E":
-                    displayController.DisplayFlashCards(stackController.GetStackFlashCard<FlashCard>());
-                    stackController.EditFlashCard();
+                    Display.DisplayFlashCards(stackController.GetStackFlashCard(_dbConnection));
+                    stackController.EditFlashCard(_dbConnection);
                     break;
                 case "D":
-                    displayController.DisplayFlashCards(stackController.GetStackFlashCard<FlashCard>());
-                    stackController.DeleteFlashCard();
+                    Display.DisplayFlashCards(stackController.GetStackFlashCard(_dbConnection));
+                    stackController.DeleteFlashCard(_dbConnection);
                     break;
                 default:
                     Console.WriteLine("Wrong input. Try again.");

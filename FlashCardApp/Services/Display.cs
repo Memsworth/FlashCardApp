@@ -1,23 +1,18 @@
-﻿using System.Data;
-using ConsoleTableExt;
+﻿using ConsoleTableExt;
 using FlashCardApp.Models.DBO;
 using FlashCardApp.Models.DTO;
 
 namespace FlashCardApp.Services;
 
-public class Display
+public static class Display
 {
-    private IDbConnection _dbConnection;
-
-    public Display(IDbConnection dbConnection)
-    {
-        _dbConnection = dbConnection;
-    }
-
-    public void DisplayFlashCards<T>(List<T> items) where T : FlashCard => ConsoleTableBuilder
+    public static void DisplayFlashCards(List<FlashCard> items) => ConsoleTableBuilder
         .From(items.Select(x => new FlashCardDTO(x)).ToList()).ExportAndWriteLine();
 
     
-    public void DisplayLanguages<T>(List<T> items) where T : LanguageStackModel => ConsoleTableBuilder
+    public static void DisplayLanguages(List<LanguageStackModel> items) => ConsoleTableBuilder
         .From(items.Select(x => new LanguageStackDTO(x)).ToList()).ExportAndWriteLine();
+
+    public static void DisplaySessions(List<StudySessionModel> items) => ConsoleTableBuilder
+        .From(items.Select(x => new {x.Score, SessionDate = x.SessionDate.ToString("yyyy MMMM dd")}).ToList()).ExportAndWriteLine();
 }
