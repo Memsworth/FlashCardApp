@@ -19,6 +19,29 @@ public class StudySessionManager
     }
 
 
+    public void ReportManager()
+    {
+        while (true)
+        {
+            int choiceA = Helper.GetValidInt("Enter 1 to view specific report or 2 to view overall", 0, 2);
+            switch (choiceA)
+            {
+                case 0:
+                    return;
+                case 1:
+                    string input = Helper.GetString("Enter a language stack");
+                    break;
+                case 2:
+                    break;
+                default:
+                    Console.WriteLine("wrong command");
+                    break;
+            }
+        }
+
+        
+    }
+
     public void DisplaySessions()
     {
         Display.DisplaySessions(Controller.GetSessions(_dbConnection));
